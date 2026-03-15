@@ -23,23 +23,23 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
-  -- I used Claude on this project.
+  - I used Claude on this project.
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
-  -- In the UI changing the difficulty wasn't resetting the game. When I prompted this message in the chat, claude was able to find the root cause immediately. It correctly identified that the secret was being set once the app starts not taking account of the switch of difficulty. I accepted the changes and ran the UI to verify the fix.
+  - In the UI changing the difficulty wasn't resetting the game. When I prompted this message in the chat, claude was able to find the root cause immediately. It correctly identified that the secret was being set once the app starts not taking account of the switch of difficulty. I accepted the changes and ran the UI to verify the fix.
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
-  -- The history wasn't being updated when a guess was submitted. I asked Claude to debug the issue. It deleted the code where the history was being shown and argued that removal of the code resolves the problem. Then I asked it to find another way instead and it went into a rabbit hole. In a new chat I specifically asked what i wanted then the agent suggested to use st.rerun as the app runs top to bottom and history is already rendered before the submit handler was executed. I accepted this argument and verified the outcome in the UI
+  - The history wasn't being updated when a guess was submitted. I asked Claude to debug the issue. It deleted the code where the history was being shown and argued that removal of the code resolves the problem. Then I asked it to find another way instead and it went into a rabbit hole. In a new chat I specifically asked what i wanted then the agent suggested to use st.rerun as the app runs top to bottom and history is already rendered before the submit handler was executed. I accepted this argument and verified the outcome in the UI
 
 ---
 
 ## 3. Debugging and testing your fixes
 
 - How did you decide whether a bug was really fixed?
-  -- I manually tested the UI and asked the agent to create some test cases which I verified after adding to the test suite.
+  - I manually tested the UI and asked the agent to create some test cases which I verified after adding to the test suite.
 - Describe at least one test you ran (manual or using pytest)  
   and what it showed you about your code.
-  -- While fixing the bug with switching difficulty not resetting the game, I tested the UI manually and asked the agent to create a UI test case `test_difficulty_switch_resets_game` which I ran using pytest. I observed the game was being reset and the test suite passed.
+  - While fixing the bug with switching difficulty not resetting the game, I tested the UI manually and asked the agent to create a UI test case `test_difficulty_switch_resets_game` which I ran using pytest. I observed the game was being reset and the test suite passed.
 - Did AI help you design or understand any tests? How?
-  -- I asked AI to come up some test cases for the `update_score` function. It was able to understand the logic behind the scoring and come up with some cases all by itself. It helped me to realize a case that I missed when I was manually testing the scoring.
+  - I asked AI to come up some test cases for the `update_score` function. It was able to understand the logic behind the scoring and come up with some cases all by itself. It helped me to realize a case that I missed when I was manually testing the scoring.
 
 ---
 
