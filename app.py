@@ -113,7 +113,6 @@ if submit:
             secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
-        print(f"Outcome: {outcome}, Message: {message}")
 
         if show_hint:
             st.session_state.hint = message
