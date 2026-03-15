@@ -1,4 +1,4 @@
-from logic_utils import check_guess, parse_guess
+from logic_utils import check_guess, parse_guess, get_range_for_difficulty
 from streamlit.testing.v1 import AppTest
 
 # FIX: updated the return of the check_guess function to accept a tuple of (outcome, message)
@@ -76,6 +76,19 @@ def test_parse_guess_special_characters():
     assert ok is False
     assert value is None
     assert err == "That is not a number."
+
+def test_get_range_easy():
+    assert get_range_for_difficulty("Easy") == (1, 20)
+
+def test_get_range_normal():
+    assert get_range_for_difficulty("Normal") == (1, 100)
+
+def test_get_range_hard():
+    assert get_range_for_difficulty("Hard") == (1, 50)
+
+def test_get_range_unknown_defaults_to_normal():
+    assert get_range_for_difficulty("Unknown") == (1, 100)
+
 
 # FIX: added a test to verify that switching difficulty resets the game state (secret, attempts, score, history, status)
 def test_difficulty_switch_resets_game():
