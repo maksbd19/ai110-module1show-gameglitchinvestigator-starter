@@ -57,8 +57,9 @@ st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
+# FIX: initialize attempts value at 0. debug with ai agent
 if "attempts" not in st.session_state:
-    st.session_state.attempts = 1
+    st.session_state.attempts = 0
 
 if "score" not in st.session_state:
     st.session_state.score = 0
@@ -96,7 +97,7 @@ with st.form(key=f"guess_form_{difficulty}"):
 
 # FIX: Reset all game state on new game; used difficulty-aware range and restored missing fields (score, status, history) — fixed collaboratively with AI
 if new_game:
-    st.session_state.attempts = 1
+    st.session_state.attempts = 0
     st.session_state.secret = random.randint(low, high)
     st.session_state.score = 0
     st.session_state.status = "playing"
@@ -113,7 +114,6 @@ if st.session_state.status != "playing":
 
 # FIX: attempts should only increment on valid guess, skipped on error — fixed collaboratively with AI
 if submit:
-    print("Raw guess input:", raw_guess)  # Debug log for raw input
     ok, guess_int, err = parse_guess(raw_guess)
 
     if not ok:
@@ -153,6 +153,7 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+            st.rerun()
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
