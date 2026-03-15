@@ -77,6 +77,32 @@ def test_parse_guess_special_characters():
     assert value is None
     assert err == "That is not a number."
 
+# FIX: added a test to verify that switching difficulty resets the game state (secret, attempts, score, history, status)
+def test_difficulty_switch_resets_game():
+    # Start a game on Normal, make a guess, then switch to Easy — state should reset
+    at = AppTest.from_file("app.py").run()
+    # Confirm default difficulty is Normal (index=1)
+    assert at.session_state["difficulty"] == "Normal"
+
+    # Make a valid guess to dirty up the game state
+    at.text_input[0].set_value("42")
+    at.button[0].click().run()
+    assert at.session_state["attempts"] == 1
+    assert len(at.session_state["history"]) == 1
+
+    # Switch difficulty to Easy
+    at.sidebar.selectbox[0].set_value("Easy").run()
+
+    # All game state should be reset
+    assert at.session_state["attempts"] == 0
+    assert at.session_state["history"] == []
+    assert at.session_state["score"] == 0
+    assert at.session_state["status"] == "playing"
+    # Secret must be within the Easy range (1–20)
+    assert 1 <= at.session_state["secret"] <= 20
+    assert at.session_state["difficulty"] == "Easy"
+
+
 # FIX: added a test to verify that hitting enter on the guess input field submits the form and increments attempts
 def test_form_submit_processes_guess():
     # Verify that submitting the guess form increments attempts,

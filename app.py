@@ -54,21 +54,26 @@ low, high = get_range_for_difficulty(difficulty)
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
-if "secret" not in st.session_state:
+# FIX: added logic to reset the game state when difficulty changes — fixed collaboratively with AI
+difficulty_changed = st.session_state.get("difficulty") != difficulty
+
+if "secret" not in st.session_state or difficulty_changed:
     st.session_state.secret = random.randint(low, high)
 
 # FIX: initialize attempts value at 0. debug with ai agent
-if "attempts" not in st.session_state:
+if "attempts" not in st.session_state or difficulty_changed:
     st.session_state.attempts = 0
 
-if "score" not in st.session_state:
+if "score" not in st.session_state or difficulty_changed:
     st.session_state.score = 0
 
-if "status" not in st.session_state:
+if "status" not in st.session_state or difficulty_changed:
     st.session_state.status = "playing"
 
-if "history" not in st.session_state:
+if "history" not in st.session_state or difficulty_changed:
     st.session_state.history = []
+
+st.session_state.difficulty = difficulty
 
 st.subheader("Make a guess")
 
