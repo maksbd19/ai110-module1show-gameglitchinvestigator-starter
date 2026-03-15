@@ -1,4 +1,4 @@
-from logic_utils import check_guess, parse_guess, get_range_for_difficulty
+from logic_utils import check_guess, parse_guess, get_range_for_difficulty, update_score
 from streamlit.testing.v1 import AppTest
 
 # FIX: updated the return of the check_guess function to accept a tuple of (outcome, message)
@@ -114,6 +114,31 @@ def test_difficulty_switch_resets_game():
     # Secret must be within the Easy range (1–20)
     assert 1 <= at.session_state["secret"] <= 20
     assert at.session_state["difficulty"] == "Easy"
+
+
+# FIX: moved update_score from app.py to logic_utils.py and added test cases
+def test_update_score_win_early():
+    # Win on attempt 1: points = 100 - 10*(1+1) = 80
+    assert update_score(0, "Win", 1) == 80
+
+def test_update_score_win_late_floors_at_10():
+    # Win on attempt 9: points = 100 - 10*(9+1) = 0 → floored to 10
+    assert update_score(0, "Win", 9) == 10
+
+def test_update_score_too_high_even_attempt():
+    # Even attempt_number → +5
+    assert update_score(100, "Too High", 2) == 105
+
+def test_update_score_too_high_odd_attempt():
+    # Odd attempt_number → -5
+    assert update_score(100, "Too High", 3) == 95
+
+def test_update_score_too_low():
+    assert update_score(100, "Too Low", 1) == 95
+
+def test_update_score_unknown_outcome():
+    # Unknown outcome should leave score unchanged
+    assert update_score(50, "Unknown", 1) == 50
 
 
 # FIX: added a test to verify that hitting enter on the guess input field submits the form and increments attempts
