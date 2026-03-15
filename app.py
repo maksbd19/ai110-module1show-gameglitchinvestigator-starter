@@ -46,6 +46,9 @@ if "status" not in st.session_state or difficulty_changed:
 if "history" not in st.session_state or difficulty_changed:
     st.session_state.history = []
 
+if "hint" not in st.session_state or difficulty_changed:
+    st.session_state.hint = None
+
 st.session_state.difficulty = difficulty
 
 st.subheader("Make a guess")
@@ -80,8 +83,12 @@ if new_game:
     st.session_state.score = 0
     st.session_state.status = "playing"
     st.session_state.history = []
+    st.session_state.hint = None
     st.success("New game started.")
     st.rerun()
+
+if st.session_state.get("hint"):
+    st.warning(st.session_state.hint)
 
 if st.session_state.status != "playing":
     if st.session_state.status == "won":
@@ -106,9 +113,12 @@ if submit:
             secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
+        print(f"Outcome: {outcome}, Message: {message}")
 
         if show_hint:
-            st.warning(message)
+            st.session_state.hint = message
+        else:
+            st.session_state.hint = None
 
         st.session_state.score = update_score(
             current_score=st.session_state.score,
@@ -123,9 +133,11 @@ if submit:
                 f"You won! The secret was {st.session_state.secret}. "
                 f"Final score: {st.session_state.score}"
             )
+            st.session_state.hint = None
         else:
             if st.session_state.attempts >= attempt_limit:
                 st.session_state.status = "lost"
+                st.session_state.hint = None
                 st.error(
                     f"Out of attempts! "
                     f"The secret was {st.session_state.secret}. "
