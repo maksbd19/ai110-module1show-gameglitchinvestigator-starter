@@ -29,6 +29,8 @@ def parse_guess(raw: str):
     return True, value, None
 
 
+# FIXME: The check_guess function is comparing guess and secret as strings on some attempts, 
+# and as ints on others.
 def check_guess(guess, secret):
     if guess == secret:
         return "Win", "🎉 Correct!"
@@ -118,6 +120,8 @@ with st.expander("Developer Debug Info"):
     st.write("Difficulty:", difficulty)
     st.write("History:", st.session_state.history)
 
+# FIXME: Hitting enter on the input box doesn't submit the guess, but it should.
+
 raw_guess = st.text_input(
     "Enter your guess:",
     key=f"guess_input_{difficulty}"
@@ -131,6 +135,8 @@ with col2:
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
+# FIXME: The "New Game" button doesn't reset the game state properly. It should 
+# reset attempts, secret, score, status, and history.
 if new_game:
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(1, 100)

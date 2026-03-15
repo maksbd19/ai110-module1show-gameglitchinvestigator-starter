@@ -5,8 +5,18 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 1. What was broken when you started?
 
 - What did the game look like the first time you ran it?
+  -- The app ran without any error, the UI looked clean and intuitive. There was a clear message of what to do and the buttons and control elements were clearly labeled.
+
 - List at least two concrete bugs you noticed at the start  
   (for example: "the secret number kept changing" or "the hints were backwards").
+  -- After entering a number in the input, hitting enter key doesn't submit the guess despite the message saying "Press Enter to apply".
+  -- The hints were problematic, they weren't consistent to the input to the secret.
+  -- Clicking on the 'New Game' button should reset the game and start a new one.
+  -- Submitting empty guess or invalid string decreases attempt left count and it goes to negative.
+  -- The attempt value is inconsistent between the sidebar, top message and developer debug section
+  -- Switching difficulty in the settings sidebar doesn’t change the secret or reset the game.
+  -- Submitting negative number doesn't show any error
+  -- Score calculation is problematic
 
 ---
 
