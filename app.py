@@ -102,20 +102,16 @@ with st.expander("Developer Debug Info"):
     st.write("Difficulty:", difficulty)
     st.write("History:", st.session_state.history)
 
-# FIXME: Hitting enter on the input box doesn't submit the guess, but it should.
-
-raw_guess = st.text_input(
-    "Enter your guess:",
-    key=f"guess_input_{difficulty}"
-)
-
-col1, col2, col3 = st.columns(3)
-with col1:
-    submit = st.button("Submit Guess 🚀")
-with col2:
-    new_game = st.button("New Game 🔁")
-with col3:
-    show_hint = st.checkbox("Show hint", value=True)
+# FIX: Asked the agent to wrap input in st.form so Enter submits the guess; buttons changed to form_submit_button, added a test case
+with st.form(key=f"guess_form_{difficulty}"):
+    raw_guess = st.text_input("Enter your guess:")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        submit = st.form_submit_button("Submit Guess 🚀")
+    with col2:
+        new_game = st.form_submit_button("New Game 🔁")
+    with col3:
+        show_hint = st.checkbox("Show hint", value=True)
 
 # FIXME: The "New Game" button doesn't reset the game state properly. It should 
 # reset attempts, secret, score, status, and history.
