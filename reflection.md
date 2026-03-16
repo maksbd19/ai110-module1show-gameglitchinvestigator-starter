@@ -46,8 +46,11 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 4. What did you learn about Streamlit and state?
 
 - In your own words, explain why the secret number kept changing in the original app.
+  - In the original buggy app the secret was defined as `secret_number = random.randint(1, 100) ` and streamlit was re-initializing this variable every time the app was re-rendering hence the secret was changing with every interaction.
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+  - Streamlit renders the webapp from top to bottom. Every time any state changes or event occurs the app is re-executed and the UI is rerendered from top to bottom. Streamlit has a session state that can be used to keep data persistent across re-render.
 - What change did you make that finally gave the game a stable secret number?
+  - The secret was stored in the app session to make it persistent across the app. The secret now only changes when the window is refreshed, difficulty is changed or new game is initiated.
 
 ---
 
@@ -55,5 +58,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+  - I want to keep commits small and focused on small task. I found its easy to investigate any changes and revert back if necessary when the changes are small.
 - What is one thing you would do differently next time you work with AI on a coding task?
+  - I will keep the prompt detailed and focused on the task and give the AI enough context so that it won't make up anything unnecessary or erroneous.
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+  - I used to prompt in a single session thinking my context is better preserved that way but I realized it was prone to error and hallucinating agents. Having individual sessions make coding experience much simpler.
